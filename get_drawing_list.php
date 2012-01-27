@@ -2,22 +2,17 @@
 include('dewdb.inc');
 $cxn = mysql_connect($dewhost,$dewname,$dewpswd) or die(mysql_error());
 mysql_select_db('Inspection',$cxn) or die("error opening db: ".mysql_error());
-    header("Content-type: text/xml");
-    echo "<?xml version='1.0' encoding='ISO-8859-1'?>"; 
-	$filter = $_POST['Customer_ID'];
-	$xml = '';
-$qry="SELECT * FROM Components WHERE Customer_ID=$filter;";
+$custid=$_GET['custid'];
+$qry="SELECT * FROM Components WHERE Customer_ID='$custid';";
 
 $resa = mysql_query($qry, $cxn) or die(mysql_error($cxn));
-		
-     		$xml = $xml . '<drgs>';
-     		
-while ($row = mysql_fetch_assoc($resa))
-        		{
-        $xml = $xml . '<drawing id="'.$row['Drawing_ID'].'">'.$row['Drawing_NO'].$row['Component_Name'].'</drawing>';
-            }
-                 		
-        
-    	  $xml = $xml . '</drgs>';
-	echo( $xml );
+		print("<label for=\"draw\">Select Drawing</label>");
+		print("<select name=\"Drawing_ID\" id=\"Drawing_ID\">");
+		while ($row = mysql_fetch_assoc($resa))
+		{
+		echo "<option value=".$row['Drawing_ID'].">";
+		echo "$row[Component_Name] - $row[Drawing_NO]</option>";
+ 		}
+		print("</select>");
+
 ?>
