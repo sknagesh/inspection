@@ -7,6 +7,7 @@ mysql_select_db('Inspection',$cxn) or die("error opening db: ".mysql_error());
 
         
         $ipd= "<tr><td><input type=\"text\" name=\"baloonno[$i]\" id=\"baloonno[$i]\" /></td>";
+		$ipd.= "<td><input type=\"text\" name=\"dimndesc[$i]\" id=\"dimndesc[$i]\" /></td>";
 		$ipd.= "<td><input type=\"text\" name=\"basicdimn[$i]\" id=\"basicdimn[$i]\" /></td>";
 		$ipd.= "<td><input type=\"text\" name=\"tollower[$i]\" id=\"tollower[$i]\" /></td>";
 		$ipd.= "<td><input type=\"text\" name=\"tolupper[$i]\" id=\"tolupper[$i]\" /></td>";

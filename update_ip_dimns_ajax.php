@@ -7,7 +7,7 @@ $ipd="";
 if($filter!=0)
 {
 	$ipd="<table border=\"1\" cellspacing=\"1\" id=\"inprocesstble\">";
-	$ipd.= "<tr><th>Baloon No</th><th>Basic dimn</th><th>Tol. Lower</th><th>Tol Upper</th>";
+	$ipd.= "<tr><th>Baloon No</th><th>Dimn. Desc</th><th>Basic dimn</th><th>Tol. Lower</th><th>Tol Upper</th>";
 	$ipd.='<th>Instrument ID</th><th>Text Field?</th><th>Production Dimn?</th><th>Delete Dimn?</th></tr>';
 	$qry="SELECT * FROM InProcess WHERE Operation_ID=$filter;";
 
@@ -21,6 +21,7 @@ $noofdimns=mysql_num_rows($resa);
 	{
 	$i=0;
         $ipd.= "<tr><td><input type=\"text\" name=\"baloonno[$i]\" id=\"baloonno[$i]\" class=\"validate[required,custom[float]] text-input\" size=\"15\"/></td>";
+		$ipd.= "<td><input type=\"text\" name=\"dimndesc[$i]\" id=\"dimndesc[$i]\" size=\"15\"/></td>";
 		$ipd.= "<td><input type=\"text\" name=\"basicdimn[$i]\" id=\"basicdimn[$i]\" class=\"validate[required,custom[float]] text-input\" size=\"15\"/></td>";
 		$ipd.= "<td><input type=\"text\" name=\"tollower[$i]\" id=\"tollower[$i]\" class=\"validate[funcCall[checktol]] text-input\" size=\"15\"/></td>";
 		$ipd.= "<td><input type=\"text\" name=\"tolupper[$i]\" id=\"tolupper[$i]\" class=\"validate[funcCall[checktol]] text-input\" size=\"15\"/></td>";
@@ -55,6 +56,7 @@ $noofdimns=mysql_num_rows($resa);
         	if($row['Text_Field']==1){$tf1="Checked";} else{$tf0="Checked";};
 			if($row['Prod_Dimn']==1){$pd1="Checked";} else{$pd0="Checked";};
         $ipd.= "<tr><td><input type=\"text\" name=\"baloonno[$i]\" id=\"baloonno[$i]\" value=\"$row[Baloon_NO]\" class=\"validate[required,custom[float]] text-input\"size=\"15\"/></td>";
+		$ipd.= "<td><input type=\"text\" name=\"dimndesc[$i]\" id=\"dimndesc[$i]\" size=\"15\" value=\"$row[Dimn_Desc]\"/></td>";
 		$ipd.= "<td><input type=\"text\" name=\"basicdimn[$i]\" id=\"basicdimn[$i]\" value=\"$row[Basic_Dimn]\" class=\"validate[required,custom[float]] text-input\"size=\"15\"/></td>";
 		$ipd.= "<td><input type=\"text\" name=\"tollower[$i]\" id=\"tollower[$i]\" value=\"$row[Tol_Lower]\" class=\"validate[required,funcCall[checktol]] text-input\" text-input\" size=\"15\"/></td>";
 		$ipd.= "<td><input type=\"text\" name=\"tolupper[$i]\" id=\"tolupper[$i]\" value=\"$row[Tol_Upper]\" class=\"validate[required,funcCall[checktol]] text-input\" size=\"15\"/></td>";
