@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+	<head>
+		<title>Create New Production Batch No</title>
+<link rel="stylesheet" href="validationEngine.jquery.css" type="text/css">
+ <style type="text/css">
+* { font-family: Verdana; font-size=10; }
+label {padding-right:1em;float: left; color: green}
+label.error { float: none; color: red; padding-left: .5em; vertical-align: top; }
+p { font-weight: bold; clear: both; }
+.submit { margin-left: 12em; }
+.drawingqty{border-spacing=2px;
+color: #ffffff;
+} 
+</style>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="jquery.validate.js"></script>
+<script type="text/javascript" src="batch_no.js"></script>
+</head>
+<body>
+<h2 align=Center>Enter Inprocess Observations</h2>
+
+
+<form name="batchno" id="batchno" method="post" action="add_new_batch.php" >
+<fieldset><legend>Select Drawing Details</legend>
+<table >		
+		<tr><td><div id="customer"></div></td></tr>		
+		<tr><td><div id="drawing"></div></td></tr>
+</table>
+</fieldset>
+<table id="bdetails">		
+		<tr><td><label for="bno">Batch No</label></td>
+		<td><input type="Text" name="Batch_Desc" id="Batch_Desc" class="required" />
+		<td><label for="bno">Auto Generate Batch No</label></td>
+		<td><input type="checkbox" name="autobatch" id="autobatch"></td></tr>
+		<td><label for="bno">Batch Qty</label></td>
+		<td><input type="Text" name="Batch_Qty" id="Batch_Qty" class="required number"/></td></tr>
+		<td colspan=4 align=center><input type=submit name=Submit value=Submit />
+</table>		
+		</form>
+
+<div id="footer"></div> <!--place show errors, results etc-->
+
+</body>
+</html>

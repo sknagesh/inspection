@@ -26,16 +26,19 @@ color: #ffffff;
 <table border="0" width = "100%" cellspacing="10">		
 <tr><td><div id="customer"></div></td>		
 <td><div id="drawing"></div></td>
-<td><div id="batch"></div></td>
-<td><div id="operation"></div></td>
+<td><div id="batch"></div></td></tr>
+<tr><td><div id="operation"></div></td>
+<td><div id="inspector"></div></td></tr>
 </table>
-<table>
-<tr><td><div id="inspector"></div></td>
-<td><label for="jobno">Job No</label></td>
+<table id="insp">
+<tr><td><label for="jobno">Job No</label></td>
 <td><input type="text" name="jobno" id="jobno" size="10" class="required"></td>
 <td><label for="date">Date</label></td>
 <td><input type="text" name="date" id="date" size="10" class="required indianDate"></td>
-<td><input type="hidden" name="noofcomps" id="noofcomps" ></td>
+<input type="hidden" name="noofcomps" id="noofcomps" >
+<td><label for="date">First Artical?</label></td>
+<td><input type="radio" name="fai" id="fai1" value="0"/>No</input>
+	<input type="radio" name="fai" id="fai2" class="required" value="1"/>Yes</input></td>
 </tr>
 </table>
 </fieldset>

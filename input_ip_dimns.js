@@ -1,8 +1,33 @@
 $(document).ready(function() {
 
-$('*[id^="obser"]').live("blur",function(event){
+$('#insp').hide();
+
+$('*[id^="obser"]').live("blur",function(event){ //function to check if observed dimn is with in tolerance
+	var ok="";
 	var eid=$(this).attr("id");
 	var id=eid.substring(12,13);
+	var tl='tl['+id+']';
+	var tu='tu['+id+']';
+	var bd='bd['+id+']';
+	var tlow=document.getElementById(tl).value;
+	var tup=document.getElementById(tu).value;
+	var bdim=document.getElementById(bd).value;
+	var edimn=$(this).val();
+
+	if(edimn!="")
+		{
+			var url="checkvalue.php?tlow="+tlow+"&tup="+tup+"&bdim="+bdim+"&edimn="+edimn;
+			$.ajax({  //calling php script because js math abilities are worse at best
+      					type: "GET",
+      					url: url,
+      					async:false,
+      					success: function(html) {
+						ok=html;
+													}
+    							});
+						if(ok=="0"){$(this).css("background-color","red");}else{$(this).css("background-color","#00FF99");}
+
+		}
 	});
 
 $('#inputdimn').validate(); //attach form to validation engine
@@ -15,7 +40,6 @@ $('#customer').click(function() {     //populate drawing list based on customer
 	$('#drawing').load(url);
 	$('#operation').empty();
 	$('#ipdimns').empty();
-
     });
 
 $("#drawing").click(function() {      //populate operation list based on drawing no
@@ -30,10 +54,8 @@ $("#batch").change(function() {      //populate operation list based on drawing 
 	var batchid=$('#Batch_ID').val();
 	if(batchid!="")
   		{
-		console.log(drawingid);
 	 	var url="get_operation_list.php?drawingid="+drawingid;
 		$('#operation').load(url);
-		$('#inspector').load("get_inspector.php"); //load customer list on to div customer
 		}
 		else
 		{
@@ -42,12 +64,29 @@ $("#batch").change(function() {      //populate operation list based on drawing 
 		}
 	});
 
-
 $("#operation").click(function() {     //show inprocess dimensions based on operation no
-	var opid=$('#Operation_ID').val();
-	var url="get_ip_dimns.php?opid="+opid;
-	$('#ipdimns').load(url);
+			$('#ipdimns').empty();
+			$('#inspector').load("get_inspector.php"); //load customer list on to div customer
+			$('#insp').show();
+
 	});
+
+
+
+
+$('input[id^="fai"]').click(function() {      //show dimensions based on selection
+	var drawingid=$('#Drawing_ID').val();
+	var fai=$(this).val();
+	var opid=$('#Operation_ID').val();
+console.log(fai);
+	var url="get_ip_dimns.php?opid="+opid+'&fai='+fai;
+	$('#ipdimns').load(url);
+
+	});
+
+
+
+
 
 });
 
