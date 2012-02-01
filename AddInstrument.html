@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+	<head>
+		<title>Add New Instrument To Database</title>
+<link rel="stylesheet" href="validationEngine.jquery.css" type="text/css">
+ <style type="text/css">
+* { font-family: Verdana; font-size=10; }
+label {padding-right:1em;float: left; color: green}
+label.error { float: none; color: red; padding-left: .5em; vertical-align: top; }
+p { font-weight: bold; clear: both; }
+.submit { margin-left: 12em; }
+.drawingqty{border-spacing=2px;
+color: #ffffff;
+} 
+</style>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="jquery.validate.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+$('#addinst').validate(); //attach form to validation engine
+});
+
+$("form#addinst").live("submit",function(event) {
+	event.preventDefault();
+	var $this = $(this);
+	
+	$.ajax({data: $this.serializeArray(),
+   			dataType: "html",
+   			type: $this.attr("method"),
+   			url: $this.attr("action"),
+   			success: function(html) {
+								document.getElementById('footer').innerHTML=html;
+								$('#addinst')[0].reset();
+							
+      								}
+			});
+
+	});
+
+	
+	
+</script>
+</head>
+<body>
+
+<form name="addinst" id="addinst" method="post" action="add_instrument.php" >
+<fieldset><legend>Enter Instrument Details</legend>
+<table >		
+
+		<tr><td><label for="bno">Instrument No</label></td>
+		<td><input type="Text" name="instno" id="instno" class="required" />
+		<td><label for="bno">Instrument Description</label></td>
+		<td><input type="Text" name="instdesc" id="instdesc" class="required"/></td></tr>
+		<td colspan=4 align=center><input type=submit name=Submit value=Submit />
+</table>
+</fieldset>
+	
+		</form>
+
+<div id="footer"></div> <!--place show errors, results etc-->
+
+</body>
+</html>

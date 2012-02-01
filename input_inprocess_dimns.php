@@ -9,6 +9,7 @@ $operationid=$_POST['Operation_ID'];
 $inspectorid=$_POST['Inspector_ID'];
 $batchid=$_POST['Batch_ID'];
 $jobno=$_POST['jobno'];
+$ipid=$_POST['ipid'];
 $date=change_date_format_for_db($_POST['date']);
 $observation=$_POST['observation'];
 $remark=$_POST['remarks'];
@@ -16,8 +17,8 @@ $noofdimns=$_POST['noofcomps'];
 $i=0;
 while($i<$noofdimns)
 {
-$query="INSERT INTO InprocessDimns (Operation_ID, Batch_ID, Inspector_ID, Job_NO,Job_Date,Dimn_Measured,Remarks) ";
-$query.=" VALUES('$operationid','$batchid','$inspectorid','$jobno','$date','$observation[$i]','$remark[$i]');";
+$query="INSERT INTO InprocessDimns (Operation_ID, IP_ID,Batch_ID, Inspector_ID, Job_NO,Job_Date,Dimn_Measured,Remarks) ";
+$query.=" VALUES('$operationid','$ipid[$i]','$batchid','$inspectorid','$jobno','$date','$observation[$i]','$remark[$i]');";
 //print("<br>$query");
 $res = mysql_query($query, $cxn) or die(mysql_error($cxn));
 $result=mysql_affected_rows($cxn);

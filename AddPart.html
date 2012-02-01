@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+	<head>
+		<title>Add New Part To Database</title>
+<link rel="stylesheet" href="validationEngine.jquery.css" type="text/css">
+ <style type="text/css">
+* { font-family: Verdana; font-size=10; }
+label {padding-right:1em;float: left; color: green}
+label.error { float: none; color: red; padding-left: .5em; vertical-align: top; }
+p { font-weight: bold; clear: both; }
+.submit { margin-left: 12em; }
+.drawingqty{border-spacing=2px;
+color: #ffffff;
+} 
+</style>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="jquery.validate.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+
+$('#part').validate(); //attach form to validation engine
+
+$('#customer').load("get_customer.php"); //load customer list on to div customer
+});
+	
+$("form#part").live("submit",function(event) {
+	event.preventDefault();
+	var $this = $(this);
+	
+	$.ajax({data: $this.serializeArray(),
+   			dataType: "html",
+   			type: $this.attr("method"),
+   			url: $this.attr("action"),
+   			success: function(html) {
+								document.getElementById('footer').innerHTML=html;
+								$('#part')[0].reset();
+							
+      								}
+			});
+
+	});
+
+
+	
+</script>
+</head>
+<body>
+<form name="part" id="part" method="post" action="add_new_part.php" >
+<fieldset><legend>Enter Part Details</legend>
+<table >		
+		<tr><td><div id="customer"></div></td></tr>		
+</table>
+<table>
+		<tr><td><label for="bno">Part No</label></td>
+		<td><input type="Text" name="partno" id="partno" class="required" />
+		<tr><td><label for="bno">Part Name</label></td>
+		<td><input type="Text" name="partname" id="partname" class="required" />
+		<td colspan=4 align=center><input type=submit name=Submit value=Submit />
+</table>
+</fieldset>
+
+		</form>
+
+<div id="footer"></div> <!--place show errors, results etc-->
+
+</body>
+</html>

@@ -13,13 +13,13 @@ $ipd="";
 
 if($fai==1)
 {
-	$qry="SELECT Baloon_NO, Basic_Dimn,Dimn_Desc,Tol_Lower,Tol_Upper,Compulsary_Dimn,Instrument_Desc,Instrument_SLNO,Text_Field,Prod_Dimn ";
+	$qry="SELECT InProcess_ID,Baloon_NO, Basic_Dimn,Dimn_Desc,Tol_Lower,Tol_Upper,Compulsary_Dimn,Instrument_Desc,Instrument_SLNO,Text_Field,Prod_Dimn ";
 	$qry.="FROM InProcess as ip ";
 	$qry.="INNER JOIN Instrument AS inst ON inst.Instrument_ID=ip.Instrument_ID "; 
 	$qry.="WHERE Operation_ID='$filter'ORDER BY Baloon_NO ASC;";
 }
 else {
-	$qry="SELECT Baloon_NO, Basic_Dimn,Dimn_Desc,Tol_Lower,Tol_Upper,Compulsary_Dimn,Instrument_Desc,Instrument_SLNO,Text_Field,Prod_Dimn ";
+	$qry="SELECT InProcess_ID,Baloon_NO, Basic_Dimn,Dimn_Desc,Tol_Lower,Tol_Upper,Compulsary_Dimn,Instrument_Desc,Instrument_SLNO,Text_Field,Prod_Dimn ";
 	$qry.="FROM InProcess as ip ";
 	$qry.="INNER JOIN Instrument AS inst ON inst.Instrument_ID=ip.Instrument_ID "; 
 	$qry.="WHERE Operation_ID='$filter' AND Prod_Dimn!=0 ORDER BY Baloon_NO ASC;";
@@ -40,6 +40,7 @@ else {
 			$i=0;
 	while ($row = mysql_fetch_assoc($resa))
         		{
+    	$ipd.= "<input name=\"ipid[$i]\" id=\"ipid[$i]\" type=\"hidden\" value=\"$row[InProcess_ID]\"/>";
         $ipd.= "<tr><td>$row[Baloon_NO]</td>";
 		$ipd.= "<td>$row[Dimn_Desc]</td>";
 		$ipd.= "<td>$row[Basic_Dimn]</td>";

@@ -5,7 +5,10 @@ $('#insp').hide();
 $('*[id^="obser"]').live("blur",function(event){ //function to check if observed dimn is with in tolerance
 	var ok="";
 	var eid=$(this).attr("id");
-	var id=eid.substring(12,13);
+	var p1=eid.indexOf("[")+1;
+	var p2=eid.indexOf("]");
+	var id=eid.substring(p1,p2);
+	console.log("p1="+p1+"p2="+p2+"id="+id);
 	var tl='tl['+id+']';
 	var tu='tu['+id+']';
 	var bd='bd['+id+']';
@@ -72,8 +75,6 @@ $("#operation").click(function() {     //show inprocess dimensions based on oper
 	});
 
 
-
-
 $('input[id^="fai"]').click(function() {      //show dimensions based on selection
 	var drawingid=$('#Drawing_ID').val();
 	var fai=$(this).val();
@@ -103,6 +104,7 @@ $("form#inputdimn").live("submit",function(event) {
    			success: function(html) {
 								document.getElementById('footer').innerHTML=html;
 								$('#ipdimns').empty();
+								$('#jobno').val("");
       								}
 			});
 
