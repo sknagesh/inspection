@@ -57,7 +57,11 @@ $z=0;
 
 //print("<br>rrows<br>");
 //print_r(array_values($rrow));
-
+if(!isSet($rrow))
+{
+	$ipd="<br>No Dimensions entered for this operation for this batch number";
+}
+else {
 	$ipd="<table border=\"1\" cellspacing=\"1\" id=\"inprocesstble\">";
 	$ipd.= "<tr><th>Baloon No</th><th>Dimension Desc</th><th>Basic dimn</th>";
 	$ipd.='<th>Tolerance</th><th>Instrument</th>';
@@ -89,17 +93,9 @@ $z=0;
 	$ipd.="</tr>";
 	$z++;
 	}
-
-
-
-
-
-
-
-  
   		$ipd.='</table>';
   
-        				
+  }        				
 
 
 
