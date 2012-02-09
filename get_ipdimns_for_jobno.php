@@ -11,11 +11,21 @@ $ipd="";
 if($jobno!="")
 {
 
-	$qry="SELECT Dimn_Measured,Remarks,InProcessDimn_ID,InProcess_ID,Baloon_NO, Basic_Dimn,Dimn_Desc,Tol_Lower,Tol_Upper,Compulsary_Dimn,Instrument_Desc,Instrument_SLNO,Text_Field,Prod_Dimn ";
+/*SELECT InProcess_ID, InprocessDimns.Operation_ID, Basic_Dimn, InProcessDimn_ID, IP_ID, Batch_ID, Job_NO, Dimn_Measured
+FROM InProcess
+LEFT OUTER JOIN InprocessDimns
+ON InProcess.InProcess_ID = InprocessDimns.IP_ID AND InprocessDimns.Job_NO=35
+WHERE InProcess.Operation_ID = 10*/ 
+
+
+
+
+
+	$qry="SELECT Dimn_Measured,Remarks,InProcessDimn_ID,InProcess_ID,Baloon_NO, Basic_Dimn,Dimn_Desc,Tol_Lower,Tol_Upper,Compulsary_Dimn,Instrument_Desc,Instrument_SLNO,Text_Field,Prod_Dimn,Job_Date ";
 	$qry.="FROM InProcess as ip ";
-	$qry.="INNER JOIN InprocessDimns AS ipd ON ipd.IP_ID=ip.Inprocess_ID ";
+	$qry.="LEFT OUTER JOIN InprocessDimns AS ipd ON ip.InProcess_ID=ipd.IP_ID AND ipd.Job_NO='$jobno' AND Batch_ID='$batchid' ";
 	$qry.="INNER JOIN Instrument AS inst ON inst.Instrument_ID=ip.Instrument_ID "; 
-	$qry.="WHERE ipd.Operation_ID='$opid' AND Batch_ID='$batchid' AND Job_NO='$jobno' ORDER BY Baloon_NO ASC;";
+	$qry.="WHERE ip.Operation_ID='$opid' ORDER BY Baloon_NO ASC;";
 
 //print($qry);
 	$resa = mysql_query($qry, $cxn) or die(mysql_error($cxn));
