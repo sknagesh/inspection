@@ -22,7 +22,7 @@ while($row=mysql_fetch_assoc($res))
 	$jobdate=$row['Job_Date'];
 }
 
-$q="DELETE FROM InprocessDimns WHERE Batch_ID='$batchid' AND Job_NO='$jobno'";
+$q="DELETE FROM InprocessDimns WHERE Batch_ID='$batchid' AND Job_NO='$jobno' AND Operation_ID='$operationid'";
 $res = mysql_query($q, $cxn) or die(mysql_error($cxn));
 
 $i=0;

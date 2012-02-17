@@ -11,7 +11,7 @@ $a=0;
 while ($a <= $len-1) {
 	if(isset($deldimn[$a]))
 	{
-$query="DELETE FROM InProcess WHERE InProcess_ID=$inprocessid[$a];";		
+$query="UPDATE InProcess SET Deleted='1' WHERE InProcess_ID=$inprocessid[$a];";		
 //print("$query");		
 $res = mysql_query($query, $cxn) or die(mysql_error($cxn));
 $result=mysql_affected_rows($cxn);

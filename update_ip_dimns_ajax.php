@@ -9,7 +9,7 @@ if($filter!=0)
 	$ipd="<table border=\"1\" cellspacing=\"1\" id=\"inprocesstble\">";
 	$ipd.= "<tr><th>Baloon No</th><th>Dimn. Desc</th><th>Basic dimn</th><th>Tol. Lower</th><th>Tol Upper</th>";
 	$ipd.='<th>Instrument ID</th><th>Text Field?</th><th>Production Dimn?</th><th>Compulsary Dimn?</th><th>Delete Dimn?</th></tr>';
-	$qry="SELECT * FROM InProcess WHERE Operation_ID=$filter;";
+	$qry="SELECT * FROM InProcess WHERE Operation_ID=$filter AND Deleted=0;";
 
 $resa = mysql_query($qry, $cxn) or die(mysql_error($cxn));
 $noofdimns=mysql_num_rows($resa);		

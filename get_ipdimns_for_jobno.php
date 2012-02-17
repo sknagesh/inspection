@@ -8,8 +8,6 @@ $batchid=$_GET['batchid'];
 $ipd="";
 
 
-if($jobno!="")
-{
 
 /*SELECT InProcess_ID, InprocessDimns.Operation_ID, Basic_Dimn, InProcessDimn_ID, IP_ID, Batch_ID, Job_NO, Dimn_Measured
 FROM InProcess
@@ -68,11 +66,6 @@ WHERE InProcess.Operation_ID = 10*/
 		$ipd.="<tr><td><input type=\"submit\" id=\"submit\"/></input></td>";
 		$ipd.="</table>";
 		$ipd.="</form>";
-}
-else{
-	$ipd="No Dimensions to Edit";
-}
-
 
 
 	echo( $ipd );
