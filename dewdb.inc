@@ -13,10 +13,13 @@ function change_date_format_for_db($date){
 }
 
 function change_date_format_for_dispaly($date){
-
-       list($year,$month,$day) = explode("/",$date);
-       $newdate = $month."-".$day."-".$year;
+       	
+if($date!='')
+{
+       list($year,$month,$day) = explode("-",$date);
+       $newdate = $day."-".$month."-".$year;
        return $newdate;
+}else return '';
 }
 
 function time_convert($time){
