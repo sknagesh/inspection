@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+$('#viewipdimn').validate(); //attach form to validation engine
+
 $('#customer').load("get_customer.php"); //load customer list on to div customer
 
 $('#customer').click(function() {     //populate drawing list based on customer
@@ -40,25 +42,17 @@ var url="view_report_inprocess_dimns.php?opid="+opid+"&batchid="+batchid;
 
 	});
 
-/*
-$("form#viewipdimn").live("submit",function(event) {
-	event.preventDefault();
-	var $this = $(this);
-	
-	$.ajax({data: $this.serializeArray(),
-   			dataType: "html",
-   			type: "POST",
-   			url: "ip_report.php",
-   			success: function(html) {
-//				window.open("temp.pdf");
-//								$('#ipdimns').empty();
-//								$('#jobno').val("");
-      								}
-			});
-
-	});
-*/
-
+$('#viewipdimn').submit(function(){
+if (!$('*[id^="jobno"]').is(':checked')){
+	alert("Please Select At LEast One job for Report");
+	return false;
+}else if (!$('*[id^="bno"]').is(':checked')){
+	alert("Please Select At Least One Dimension for Report");
+	return false;
+}else{
+	return true;
+}
+});
 
 });
 

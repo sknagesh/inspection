@@ -74,12 +74,12 @@ if(!isSet($rrow))
 else {
 
 		print("<table border=\"1\" cellspacing=\"1\" id=\"inprocesstble\">");
-		print("<tr><th>Baloon No</th><th>Dimension Desc</th><th>Basic dimn</th>");
+		print("<tr><th>In Report</th><th>Baloon No</th><th>Dimension Desc</th><th>Basic dimn</th>");
 		print("<th>Tolerance</th><th>Instrument</th>");
 		$z=0;
 		while($z<count($jobno))  //append job nos to first row heading
 		{
-		print("<th>$jobno[$z] <input type=\"checkbox\" id=\"jobno\" name=\"jobno[$z]\" value=\"$jobno[$z]\"></th>");
+		print("<th>$jobno[$z] <input type=\"checkbox\" id=\"jobno\" name=\"jobno[$z]\" value=\"$jobno[$z]\" ></th>");
 		$z++;
 		}
 		print("</tr>");  
@@ -88,8 +88,13 @@ else {
 		while($z<count($lrows))  //while no of dimensions defined for this operation
 		{
 			print("<tr>");
+			$t=0;
 			foreach($lrows[$z] as $x) //print dimension details
 			{
+				if($t==0){
+					print("<td><input type=\"checkbox\" name=\"bno[$z]\" id=\"bno\" value=\"$x\"></td>");
+					$t=1;
+				}
 			print("<td>$x</td>");
 			$x+=1;
 			}

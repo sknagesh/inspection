@@ -2,12 +2,21 @@
 include('dewdb.inc');
 require('fpdf.php');
 require('cellfit.php');
+require (dirname (__FILE__) . "/class-excel-xml.inc.php");
 
+//print_r($_POST);
 $cxn = mysql_connect($dewhost,$dewname,$dewpswd) or die(mysql_error());
 mysql_select_db('Inspection',$cxn) or die("error opening db: ".mysql_error());
-$jobno=$_POST['jobno'];
+$jobnos=$_POST['jobno'];
+$bnos=$_POST['bno'];
 $opid = $_POST['Operation_ID'];
 $batchid=$_POST['Batch_ID'];
+$pdfxl=$_POST['pdfxl'];
+//print_r($bnos);
+$jobno=array_values($jobnos);  //to reassign array values in an order ie, 1,3,7 to 0,1,2
+$bno=array_values($bnos);  //to reassign array values in an order ie, 1,3,7 to 0,1,2
+//print_r($bno);
+$bnomax=count($bno);
 
 
 $j="SELECT Component_Name, Customer_Name, Drawing_NO FROM
@@ -115,7 +124,6 @@ $pdf->AliasNbPages();
 $pdf->setAutoPageBreak(1,35);
 $pdf->AddPage('L','A4');
 $pdf->SetFont('Arial','',10);
-
 if(!isSet($rrow))
 { //if no jobs are measured for this operation
 	print("<br>No Dimensions entered for this operation for this batch number");
@@ -126,6 +134,7 @@ else {
 		$pdf->Cell(20,8,'Dimension',1,0,'L');
 		$pdf->Cell(20,8,'Tolerance',1,0,'L');
 		$pdf->Cell(20,8,'Instrument',1,0,'L');
+		$xldata[0]=array('Baloon No','Desc','Dimension','Tolerance','Instrument');
 		$z=0;
 		$jbs=count($jobno);
 		$jbsmax=5;
@@ -135,44 +144,69 @@ else {
 			if($z<$jbs)
 			{
 		$pdf->Cell(35,8,$jobno[$z],1,0,'L');
+		array_push($xldata[0],$jobno[$z]);
 			}else{
 				$pdf->Cell(35,8,'',1,0,'L');
 			}
-				
 		$z++;
 		}
 		$pdf->ln(); 
 
 		$z=0;
+		$bna=0; //baloon no counter
+		$xy=1;
 		while($z<count($lrows))  //while no of dimensions defined for this operation
 		{
+		$oktodisplay=0;
 			foreach($lrows[$z] as $x) //print dimension details
 			{
-			$pdf->CellFitScale(20,8,$x,1,0,'L');
+					
+				if($x==$bno[$bna] || $oktodisplay==1)  //if baloon no is the one selected to be displayed
+				{
+					$pdf->CellFitScale(20,8,$x,1,0,'L');
+					$xldata[$xy]=$lrows[$z];
+					$oktodisplay=1;
+				}else{break;}
 			$x+=1;
 			}
-			$s=0;
-			while($s<$jbsmax)  //print relavant dimensions measured
+			if($oktodisplay==1)
 			{
-				if($s<$jbs)
+				$s=0;
+				while($s<$jbsmax)  //print relavant dimensions measured
 				{
-			$pdf->CellFitScale(35,8,$rrow[$s][$z],1,0,'L');
-				}else{
-					$pdf->Cell(35,8,'',1,0,'L');
+					if($s<$jbs)
+					{
+						$pdf->CellFitScale(35,8,$rrow[$s][$z],1,0,'L');
+						array_push($xldata[$xy],$rrow[$s][$z]);
+					
+					}else{
+						$pdf->Cell(35,8,'',1,0,'L');
+					}
+			
+				$s+=1;
 				}
-			$s+=1;
-			}
 			$pdf->ln();   //end of each row
+			$xy+=1;
+			}
+
+					if($bna<$bnomax-1 && $oktodisplay==1)
+					{
+//						print("<br>inside bna counter bna=$bna max=$bnomax");
+					$bna+=1;
+					}
 		$z++;		
 		}
 
 
   }        				
 
-
-//		$pdf->WriteHTML($html);
-
+if(!$pdfxl)
+{
 		$name="$opid".".pdf";
 		$pdf->Output($name,'D');
-	
+}else{
+$xls = new Excel_XML;
+$xls->addArray ( $xldata );
+$xls->generateXML ($opid);
+}
 ?>
