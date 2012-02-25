@@ -23,6 +23,8 @@ mysql_select_db('Inspection',$cxn) or die("error opening db: ".mysql_error());
 		$ipd.="</select></td>";
 		$ipd.= "<td><input type=\"radio\" name=\"textfield[$i]\" id=\"textfield[$i]\" value=\"1\" Checked/>Yes</input>";
 		$ipd.= "<input type=\"radio\" name=\"textfield[$i]\" id=\"textfield[$i]\" value=\"0\" />No</input></td>";
+		$ipd.= "<td><input type=\"text\" name=\"comm1[$i]\" id=\"comm1[$i]\" size=\"7\"/></td>";
+		$ipd.= "<td><input type=\"text\" name=\"comm2[$i]\" id=\"comm2[$i]\" size=\"7\"/></td>";
 		$ipd.= "<td><input type=\"radio\" name=\"proddimn[$i]\" id=\"proddimn[$i]\" value=\"1\" Checked/>Yes</input>";
 		$ipd.= "<input type=\"radio\" name=\"proddimn[$i]\" id=\"proddimn[$i]\" value=\"0\" />No</input></td>";
 		$ipd.= "<td><input type=\"radio\" name=\"compulsary[$i]\" id=\"compulsary[$i]\" value=\"1\" Checked/>Yes</input>";

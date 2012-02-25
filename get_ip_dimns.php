@@ -13,13 +13,13 @@ $ipd="";
 
 if($fai==1)
 {
-	$qry="SELECT InProcess_ID,Baloon_NO, Basic_Dimn,Dimn_Desc,Tol_Lower,Tol_Upper,Compulsary_Dimn,Instrument_Desc,Instrument_SLNO,Text_Field,Prod_Dimn ";
+	$qry="SELECT Comment_1,Comment_2,InProcess_ID,Baloon_NO, Basic_Dimn,Dimn_Desc,Tol_Lower,Tol_Upper,Compulsary_Dimn,Instrument_Desc,Instrument_SLNO,Text_Field,Prod_Dimn ";
 	$qry.="FROM InProcess as ip ";
 	$qry.="INNER JOIN Instrument AS inst ON inst.Instrument_ID=ip.Instrument_ID "; 
 	$qry.="WHERE Operation_ID='$filter'ORDER BY Baloon_NO ASC;";
 }
 else {
-	$qry="SELECT InProcess_ID,Baloon_NO, Basic_Dimn,Dimn_Desc,Tol_Lower,Tol_Upper,Compulsary_Dimn,Instrument_Desc,Instrument_SLNO,Text_Field,Prod_Dimn ";
+	$qry="SELECT Comment_1,Comment_2,InProcess_ID,Baloon_NO, Basic_Dimn,Dimn_Desc,Tol_Lower,Tol_Upper,Compulsary_Dimn,Instrument_Desc,Instrument_SLNO,Text_Field,Prod_Dimn ";
 	$qry.="FROM InProcess as ip ";
 	$qry.="INNER JOIN Instrument AS inst ON inst.Instrument_ID=ip.Instrument_ID "; 
 	$qry.="WHERE Operation_ID='$filter' AND Prod_Dimn!=0 ORDER BY Baloon_NO ASC;";
@@ -55,8 +55,12 @@ else {
 		$ipd.= "<input name=\"bd[$i]\" id=\"bd[$i]\" type=\"hidden\" value=\"$row[Basic_Dimn]\"/>";		
 		}else
 		{
-		$ipd.= "<td><input type=\"radio\" name=\"observation[$i]\" id=\"observation[$i]\" value=\"Dimension OK\" class=\"required\"/>OK</input>";
-		$ipd.= "<input type=\"radio\" name=\"observation[$i]\" id=\"observation[$i]\" value=\"Dimension Not OK\" />Not OK</input></td>";
+		$ipd.="<td><select name=\"observation[$i]\" id=\"observation[$i]\" >";
+		$ipd.="<option value=\"$row[Comment_1]\">$row[Comment_1]</option>";
+		$ipd.="<option value=\"$row[Comment_2]\">$row[Comment_2]</option>";
+ 		$ipd.="</select></td>";
+//		$ipd.= "<td><input type=\"radio\" name=\"observation[$i]\" id=\"observation[$i]\" value=\"Dimension OK\" class=\"required\"/>OK</input>";
+//		$ipd.= "<input type=\"radio\" name=\"observation[$i]\" id=\"observation[$i]\" value=\"Dimension Not OK\" />Not OK</input></td>";
 		}
 		$ipd.= "<td><input type=\"text\" name=\"remarks[$i]\" id=\"remarks[$i]\" /></td>";
 		$i++;
