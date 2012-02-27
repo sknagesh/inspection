@@ -19,7 +19,7 @@ WHERE InProcess.Operation_ID = 10*/
 
 
 
-	$qry="SELECT Dimn_Measured,Remarks,InProcessDimn_ID,InProcess_ID,Baloon_NO, Basic_Dimn,Dimn_Desc,Tol_Lower,Tol_Upper,Compulsary_Dimn,Instrument_Desc,Instrument_SLNO,Text_Field,Prod_Dimn,Job_Date ";
+	$qry="SELECT Comment_1,Comment_2,Dimn_Measured,Remarks,InProcessDimn_ID,InProcess_ID,Baloon_NO, Basic_Dimn,Dimn_Desc,Tol_Lower,Tol_Upper,Compulsary_Dimn,Instrument_Desc,Instrument_SLNO,Text_Field,Prod_Dimn,Job_Date ";
 	$qry.="FROM InProcess as ip ";
 	$qry.="LEFT OUTER JOIN InprocessDimns AS ipd ON ip.InProcess_ID=ipd.IP_ID AND ipd.Job_NO='$jobno' AND Batch_ID='$batchid' ";
 	$qry.="INNER JOIN Instrument AS inst ON inst.Instrument_ID=ip.Instrument_ID "; 
@@ -54,9 +54,12 @@ WHERE InProcess.Operation_ID = 10*/
 		$ipd.= "<input name=\"bd[$i]\" id=\"bd[$i]\" type=\"hidden\" value=\"$row[Basic_Dimn]\"/>";		
 		}else
 		{
-	if($row['Dimn_Measured']=="Dimension OK"){$ok='checked';$notok="";}else{$notok="checked";$ok="";}
-		$ipd.= "<td><input type=\"radio\" name=\"observation[$i]\" id=\"observation[$i]\" value=\"Dimension OK\" class=\"required\" $ok/>OK</input>";
-		$ipd.= "<input type=\"radio\" name=\"observation[$i]\" id=\"observation[$i]\" value=\"Dimension Not OK\" $notok />Not OK</input></td>";
+	if($row['Dimn_Measured']==$row['Comment_1']){$cm1="Selected=Selected";$cm2="";}else{$cm2="Selected=Selected";$cm1="";}
+		$ipd.="<td><select name=\"observation[$i]\" id=\"observation[$i]\" >";
+		$ipd.="<option value=\"$row[Comment_1]\" $cm1>$row[Comment_1]</option>";
+		$ipd.="<option value=\"$row[Comment_2]\" $cm2>$row[Comment_2]</option>";
+ 		$ipd.="</select></td>";
+	
 		}
 		$ipd.= "<td><input type=\"text\" name=\"remarks[$i]\" id=\"remarks[$i]\" value=\"$row[Remarks]\"/></td>";
 		$i++;
