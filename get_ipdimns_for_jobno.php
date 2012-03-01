@@ -54,7 +54,8 @@ WHERE InProcess.Operation_ID = 10*/
 		$ipd.= "<input name=\"bd[$i]\" id=\"bd[$i]\" type=\"hidden\" value=\"$row[Basic_Dimn]\"/>";		
 		}else
 		{
-	if($row['Dimn_Measured']==$row['Comment_1']){$cm1="Selected=Selected";$cm2="";}else{$cm2="Selected=Selected";$cm1="";}
+	if($row['Dimn_Measured']==$row['Comment_1']){$cm1="Selected=Selected";$cm2="";}else{$cm1='';$cm2='';}
+	if($row['Dimn_Measured']==$row['Comment_2']){$cm2="Selected=Selected";$cm1="";}else{$cm1='';$cm2='';}
 		$ipd.="<td><select name=\"observation[$i]\" id=\"observation[$i]\" >";
 		$ipd.="<option value=\"$row[Comment_1]\" $cm1>$row[Comment_1]</option>";
 		$ipd.="<option value=\"$row[Comment_2]\" $cm2>$row[Comment_2]</option>";
