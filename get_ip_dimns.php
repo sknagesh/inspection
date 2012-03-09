@@ -16,13 +16,13 @@ if($fai==1)
 	$qry="SELECT Comment_1,Comment_2,InProcess_ID,Baloon_NO, Basic_Dimn,Dimn_Desc,Tol_Lower,Tol_Upper,Compulsary_Dimn,Instrument_Desc,Instrument_SLNO,Text_Field,Prod_Dimn ";
 	$qry.="FROM InProcess as ip ";
 	$qry.="INNER JOIN Instrument AS inst ON inst.Instrument_ID=ip.Instrument_ID "; 
-	$qry.="WHERE Operation_ID='$filter'ORDER BY Baloon_NO ASC;";
+	$qry.="WHERE Operation_ID='$filter' AND Deleted!=1 ORDER BY Baloon_NO ASC;";
 }
 else {
 	$qry="SELECT Comment_1,Comment_2,InProcess_ID,Baloon_NO, Basic_Dimn,Dimn_Desc,Tol_Lower,Tol_Upper,Compulsary_Dimn,Instrument_Desc,Instrument_SLNO,Text_Field,Prod_Dimn ";
 	$qry.="FROM InProcess as ip ";
 	$qry.="INNER JOIN Instrument AS inst ON inst.Instrument_ID=ip.Instrument_ID "; 
-	$qry.="WHERE Operation_ID='$filter' AND Prod_Dimn!=0 ORDER BY Baloon_NO ASC;";
+	$qry.="WHERE Operation_ID='$filter' AND Prod_Dimn!=0 AND Deleted!=1 ORDER BY Baloon_NO ASC;";
 }
 //print($qry);
 	$resa = mysql_query($qry, $cxn) or die(mysql_error($cxn));
