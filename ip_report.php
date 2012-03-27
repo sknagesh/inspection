@@ -12,6 +12,10 @@ $bnos=$_POST['bno'];
 $opid = $_POST['Operation_ID'];
 $batchid=$_POST['Batch_ID'];
 $pdfxl=$_POST['pdfxl'];
+$rtype=$_POST['retype'];
+$comment=$_POST['comment'];
+if(isSet($_POST['rdate'])){$rdate=$_POST['rdate'];}else{$rdate="";}
+
 //print_r($bnos);
 $jobno=array_values($jobnos);  //to reassign array values in an order ie, 1,3,7 to 0,1,2
 $bno=array_values($bnos);  //to reassign array values in an order ie, 1,3,7 to 0,1,2
@@ -30,10 +34,21 @@ while($rrs=mysql_fetch_assoc($rr))
 	$custname=$rrs['Customer_Name'];
 }
 
+
+$kj="SELECT * FROM Batch_NO WHERE Batch_ID='$batchid';";
+$krr = mysql_query($kj, $cxn) or die(mysql_error($cxn));
+while($krrs=mysql_fetch_assoc($krr))
+{
+	$heatcode=$krrs['Heat_Code'];
+	$materialcode=$krrs['Material_Code'];
+}
+
+
+
 	$jobq="SELECT Job_NO FROM InprocessDimns WHERE Operation_ID='$opid' AND Batch_ID='$batchid';";
 	$r = mysql_query($jobq, $cxn) or die(mysql_error($cxn));
 
-	$qry="SELECT ip.Operation_ID, Basic_Dimn,Dimn_Desc,Tol_Lower,Tol_Upper,ip.Instrument_ID,Instrument_Desc,";
+	$qry="SELECT ip.Operation_ID, Basic_Dimn,Dimn_Desc,Tol_Lower,Tol_Upper,ip.Instrument_ID,Instrument_Desc,Instrument_SLNO, ";
 	$qry.="Baloon_NO FROM InProcess as ip ";
 	$qry.="INNER JOIN Instrument AS inst ON inst.Instrument_ID=ip.Instrument_ID ";
 	$qry.="INNER JOIN Operation AS op ON ip.Operation_ID=op.Operation_ID ";
@@ -44,7 +59,7 @@ while($rrs=mysql_fetch_assoc($rr))
 	$resa = mysql_query($qry, $cxn) or die(mysql_error($cxn));
 	while ($row = mysql_fetch_assoc($resa))  //get all dimensions for thi operation and store them in an array
         		{
-	$lrows[$j]=array($row['Baloon_NO'],$row['Dimn_Desc'],$row['Basic_Dimn'],$row['Tol_Lower'].'/'.$row['Tol_Upper'],$row['Instrument_Desc']);		
+	$lrows[$j]=array($row['Baloon_NO'],$row['Dimn_Desc'],$row['Basic_Dimn'],$row['Tol_Lower'].'/'.$row['Tol_Upper'],$row['Instrument_SLNO'].'-'.$row['Instrument_Desc']);		
 	$j++;
 		        }
 //print("<br>lrows");
@@ -84,20 +99,29 @@ function Header()
 	$custname=$GLOBALS['custname'];
 	$partno=$GLOBALS['partno'];
 	$jdate=$GLOBALS['jdate'];
+	$heatcode=$GLOBALS['heatcode'];
+	$materialcode=$GLOBALS['materialcode'];
+    $rtype=$GLOBALS['rtype'];
+    $comment=$GLOBALS['comment'];
+    $rdate=$GLOBALS['rdate'];
+    
+    if($rdate!=""){$jdate=$rdate;}else{$jdate=change_date_format_for_dispaly($jdate);}
+    
     $this->SetFont('Arial','',16);
-    $this->CellFitScale(100,18,'Divya Engineering Works (P) Ltd',1,0,'C');
-	$this->CellFitScale(100,18,'In Process Inspection Report',1,0,'C');
+    $this->CellFitScale(100,18,'Divya Engineering Works (P) Ltd, Mysore',1,0,'C');
+	$this->CellFitScale(100,18,$rtype,1,0,'C');
 	$this->SetFont('Arial','', 10);
 	$this->Cell(75,6,'RECORD REF: DEW/PRD/R/06','T R',2,'L');
 	$this->Cell(75,6,'DATE: 01-06-2003','R',2,'L');
 	$this->Cell(75,6,'REV NO: 00','B R',0,'L');
 	$this->ln();
     $this->Cell(200,6,'ITEM: '.$cname,'L T R',0,'L');
-    $this->Cell(75,6,'HEAT NO: ','T R',1,'L');
+    $this->Cell(75,6,'HEAT NO: '.$heatcode,'T R',1,'L');
     $this->Cell(200,6,'Customer: '.$custname,'L R',0,'L');
-    $this->Cell(75,6,'Material Stock NO: ','R',1,'L');
-    $this->Cell(200,6,'Customer: '.$partno,'L B R',0,'L');
-    $this->Cell(75,6,'DATE: '.change_date_format_for_dispaly($jdate),'L B R',1,'L');
+    $this->Cell(75,6,'Material Stock NO: '.$materialcode,'R',1,'L');
+    $this->Cell(100,6,'Drg No/Rev No: '.$partno,'L B R',0,'L');
+	$this->Cell(100,6,$comment,'B R',0,'L');
+    $this->Cell(75,6,'DATE: '.$jdate,'L B R',1,'L');
 
 	}
 
