@@ -14,6 +14,7 @@ $batchid=$_POST['Batch_ID'];
 $pdfxl=$_POST['pdfxl'];
 $rtype=$_POST['retype'];
 $comment=$_POST['comment'];
+$docref=$_POST['docref'];
 if(isSet($_POST['rdate'])){$rdate=$_POST['rdate'];}else{$rdate="";}
 
 //print_r($bnos);
@@ -41,6 +42,7 @@ while($krrs=mysql_fetch_assoc($krr))
 {
 	$heatcode=$krrs['Heat_Code'];
 	$materialcode=$krrs['Material_Code'];
+	$batchdesc=$krrs['Batch_Desc'];
 }
 
 
@@ -104,6 +106,8 @@ function Header()
     $rtype=$GLOBALS['rtype'];
     $comment=$GLOBALS['comment'];
     $rdate=$GLOBALS['rdate'];
+    $docref=$GLOBALS['docref'];
+    $batchdesc=$GLOBALS['batchdesc'];
     
     if($rdate!=""){$jdate=$rdate;}else{$jdate=change_date_format_for_dispaly($jdate);}
     
@@ -111,7 +115,7 @@ function Header()
     $this->CellFitScale(100,18,'Divya Engineering Works (P) Ltd, Mysore',1,0,'C');
 	$this->CellFitScale(100,18,$rtype,1,0,'C');
 	$this->SetFont('Arial','', 10);
-	$this->Cell(75,6,'RECORD REF: DEW/PRD/R/06','T R',2,'L');
+	$this->Cell(75,6,'RECORD REF: '.$docref,'T R',2,'L');
 	$this->Cell(75,6,'DATE: 01-06-2003','R',2,'L');
 	$this->Cell(75,6,'REV NO: 00','B R',0,'L');
 	$this->ln();
@@ -121,7 +125,7 @@ function Header()
     $this->Cell(75,6,'Material Stock NO: '.$materialcode,'R',1,'L');
     $this->Cell(100,6,'Drg No/Rev No: '.$partno,'L B R',0,'L');
 	$this->Cell(100,6,$comment,'B R',0,'L');
-    $this->Cell(75,6,'DATE: '.$jdate,'L B R',1,'L');
+    $this->Cell(75,6,'DATE: '.$jdate.' | Batch No: '.$batchdesc,'L B R',1,'L');
 
 	}
 
