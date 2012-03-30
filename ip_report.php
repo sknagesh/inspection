@@ -135,8 +135,8 @@ function Footer()
     $this->SetY(-35);
 	// Arial italic 8
     $this->SetFont('Arial','',16);
-	$this->Cell(220,10,"Inspected By: ",'0',0,'L');
-	$this->Cell(140,10,"Approved By",'0',1,'L');
+	$this->Cell(220,10,"Inspected By: G.S ",'0',0,'L');
+	$this->Cell(140,10,"Approved By: U.S",'0',1,'L');
 	
     // Page number
     $this->SetY(-10);
