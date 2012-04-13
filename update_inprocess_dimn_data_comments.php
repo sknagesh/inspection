@@ -26,7 +26,8 @@ $updated=0;
 $newdimn=0;
 while ($a <= $len-1) {
 	
-	if($ipid[$a]!="")
+	//if($ipid[$a]!="")
+	if(isSet($ipid[$a]))
 	{
 $qry="UPDATE InProcess SET 	Baloon_NO='$baloonno[$a]',
 							Basic_Dimn='$basicdimn[$a]',
@@ -45,7 +46,7 @@ $qry="UPDATE InProcess SET 	Baloon_NO='$baloonno[$a]',
 $resa = mysql_query($qry, $cxn) or die(mysql_error($cxn));
 $result=mysql_affected_rows($cxn);
 if($result!=0){$updated+=1;}
-	}else 	if($ipid[$a]=="")
+	}else 	//if($ipid[$a]=="")
 	{
 $qry="INSERT INTO InProcess (Baloon_NO,Basic_Dimn,Dimn_Desc,Tol_Lower,Tol_Upper,Instrument_ID,Prod_Dimn,Text_Field,Operation_ID,Compulsary_Dimn,Comment_1,Comment_2) ";
 $qry.="VALUES('$baloonno[$a]','$basicdimn[$a]','$dimndesc[$a]','$tollower[$a]','$tolupper[$a]','$instrumentid[$a]','$proddimn[$a]','$textfield[$a]','$operationno','$compulsary[$a]','$comm1[$a]','$comm2[$a]');";
