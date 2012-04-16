@@ -23,7 +23,7 @@ WHERE InProcess.Operation_ID = 10*/
 	$qry.="FROM InProcess as ip ";
 	$qry.="LEFT OUTER JOIN InprocessDimns AS ipd ON ip.InProcess_ID=ipd.IP_ID AND ipd.Job_NO='$jobno' AND Batch_ID='$batchid' ";
 	$qry.="INNER JOIN Instrument AS inst ON inst.Instrument_ID=ip.Instrument_ID "; 
-	$qry.="WHERE ip.Operation_ID='$opid' ORDER BY Baloon_NO ASC;";
+	$qry.="WHERE ip.Operation_ID='$opid' AND ip.Deleted!=1 ORDER BY Baloon_NO ASC;";
 
 //print($qry);
 	$resa = mysql_query($qry, $cxn) or die(mysql_error($cxn));
