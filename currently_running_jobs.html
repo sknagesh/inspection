@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+	<head>
+		<title>Currently Running Batch Nos</title>
+<link rel="stylesheet" href="validationEngine.jquery.css" type="text/css">
+ <style type="text/css">
+* { font-family: Verdana; font-size: 12px; }
+label {padding-right:1em;float: left; color: green}
+label.error { float: none; color: red; padding-left: .5em; vertical-align: top; }
+p { font-weight: bold; clear: both; }
+.submit { margin-left: 12em; }
+.drawingqty{border-spacing:2px;
+color: #ffffff;
+} 
+</style>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="jquery.validate.js"></script>
+<script type="text/javascript">
+	
+	$(document).ready(function() {
+$('#batchdetail').load("get_batch_details.php"); //load customer list on to div customer
+
+});
+	
+	
+</script>
+</head>
+<body>
+<fieldset><legend><label>Batch Details</label></legend>
+<div id="batchdetail"></div>
+</fieldset>
+
+<div id="footer"></div> <!--place show errors, results etc-->
+
+</body>
+</html>
