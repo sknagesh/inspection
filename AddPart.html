@@ -23,6 +23,15 @@ color: #ffffff;
 $('#part').validate(); //attach form to validation engine
 
 $('#customer').load("get_customer.php"); //load customer list on to div customer
+
+$('#customer').click(function() {     //populate drawing list based on customer
+	var custid=$('#Customer_ID').val();
+	var url="show_drawing_list.php?custid="+custid;
+	$('#footer').load(url);
+
+    });
+
+
 });
 	
 $("form#part").live("submit",function(event) {

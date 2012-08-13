@@ -9,7 +9,7 @@ if(isSet($_POST['mcode'])){$Material_Code=$_POST['mcode'];}else{$Material_Code='
 	if(isset($_POST['Batch_Desc']))
 	{
 	$Batch_Desc=$_POST['Batch_Desc'];	
-	} else{$Batch_Desc=date("W")."-".date("Y")."-".$Batch_Qty;}
+	} else{$Batch_Desc=$Drawing_ID."-".date("Y")."-".date("m")."-".date("d")."-".$Batch_Qty;}
 
 
 $query="INSERT INTO Batch_NO ";
