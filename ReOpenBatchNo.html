@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+	<head>
+		<title>Close Production Batch No</title>
+<link rel="stylesheet" href="validationEngine.jquery.css" type="text/css">
+ <style type="text/css">
+* { font-family: Verdana; font-size=10; }
+label {padding-right:1em;float: left; color: green}
+label.error { float: none; color: red; padding-left: .5em; vertical-align: top; }
+p { font-weight: bold; clear: both; }
+.submit { margin-left: 12em; }
+.drawingqty{border-spacing=2px;
+color: #ffffff;
+} 
+</style>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="jquery.validate.js"></script>
+<script type="text/javascript">
+	
+	
+	$(document).ready(function() {
+
+$('#submit').attr("disabled",true);
+
+$('#batchno').validate(); //attach form to validation engine
+
+$('#customer').load("get_customer.php"); //load customer list on to div customer
+
+$('#customer').click(function() {     //populate drawing list based on customer
+	var custid=$('#Customer_ID').val();
+	var url="get_drawing_list.php?custid="+custid;
+	$('#drawing').load(url);
+    });
+
+
+$('#drawing').click(function() {     //populate drawing list based on customer
+var drawingid=$('#Drawing_ID').val();
+
+var url="get_closed_batch_list.php?drawingid="+drawingid;
+$('#batch').load(url);
+    });
+
+$('#batch').click(function() {     //populate drawing list based on customer
+
+var batchid=$('#Batch_ID').val();
+if(batchid=="")
+{
+	$('#submit').attr("disabled",true);
+}else
+{
+	$('#submit').attr("disabled",false);
+}
+
+    });
+
+
+});
+
+$("form#batchno").live("submit",function(event) {
+	event.preventDefault();
+	var $this = $(this);
+	
+	$.ajax({data: $this.serializeArray(),
+   			dataType: "html",
+   			type: $this.attr("method"),
+   			url: $this.attr("action"),
+   			success: function(html) {
+								document.getElementById('footer').innerHTML=html;
+								$('#batchno')[0].reset();							
+      								}
+			});
+
+	});
+
+	
+	
+</script>
+</head>
+<body>
+<form name="batchno" id="batchno" method="post" action="reopen_batch.php" >
+<fieldset><legend>Select Drawing Details</legend>
+<table >		
+		<tr><td><div id="customer"></div></td></tr>		
+		<tr><td><div id="drawing"></div></td></tr>
+		<tr><td><div id="batch"></div></td></tr>
+</table>
+</fieldset>
+		<td colspan=4 align=center><input type="submit" name="Submit" id="submit" value="Submit" />
+</table>		
+		</form>
+
+<div id="footer"></div> <!--place show errors, results etc-->
+
+</body>
+</html>

@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
 $('#insp').hide();
+//$('#fai').hide();
 
 $('*[id^="obser"]').live("blur",function(event){ //function to check if observed dimn is with in tolerance
 	var ok="";
@@ -80,15 +81,22 @@ $("#operation").click(function() {     //show inprocess dimensions based on oper
 	});
 
 $("#jobno").click(function() {     //show inprocess dimensions based on operation no
+	$('#fai').show();
+	});
+
+$('input[id^="fai"]').click(function() {      //show dimensions based on selection
+
+
 	$('#ipdimns').empty();
+	var fai=$(this).val();
 	var opid=$('#Operation_ID').val();
 	var batchid=$('#Batch_ID').val();
 	var jobno=$('#Job_NO').val();
-	var url="get_ipdimns_for_jobno.php?opid="+opid+'&batchid='+batchid+'&jobno='+jobno;
+	var url="get_ipdimns_for_jobno.php?opid="+opid+'&batchid='+batchid+'&jobno='+jobno+'&fai='+fai;
 	$('#ipdimns').load(url);
 	$('#footer').empty(url);
-	});
 
+	});
 
 
 

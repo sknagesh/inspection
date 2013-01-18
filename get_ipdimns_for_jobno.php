@@ -5,6 +5,7 @@ mysql_select_db('Inspection',$cxn) or die("error opening db: ".mysql_error());
 $opid = $_GET['opid'];
 $jobno=$_GET['jobno'];
 $batchid=$_GET['batchid'];
+$fai=$_GET['fai'];
 $ipd="";
 
 
@@ -18,13 +19,27 @@ WHERE InProcess.Operation_ID = 10*/
 
 
 
+if($fai==1)
+{
+	
 
 	$qry="SELECT Comment_1,Comment_2,Dimn_Measured,Remarks,InProcessDimn_ID,InProcess_ID,Baloon_NO, Basic_Dimn,Dimn_Desc,Tol_Lower,Tol_Upper,Compulsary_Dimn,Instrument_Desc,Instrument_SLNO,Text_Field,Prod_Dimn,Job_Date ";
 	$qry.="FROM InProcess as ip ";
 	$qry.="LEFT OUTER JOIN InprocessDimns AS ipd ON ip.InProcess_ID=ipd.IP_ID AND ipd.Job_NO='$jobno' AND Batch_ID='$batchid' ";
 	$qry.="INNER JOIN Instrument AS inst ON inst.Instrument_ID=ip.Instrument_ID "; 
 	$qry.="WHERE ip.Operation_ID='$opid' AND ip.Deleted!=1 ORDER BY Baloon_NO ASC;";
-
+}else{
+	$qry="SELECT Comment_1,Comment_2,Dimn_Measured,Remarks,
+			InProcessDimn_ID,InProcess_ID,Baloon_NO, 
+			Basic_Dimn,Dimn_Desc,Tol_Lower,Tol_Upper,
+			Compulsary_Dimn,Instrument_Desc,Instrument_SLNO,
+			Text_Field,Prod_Dimn,Job_Date ";
+	$qry.="FROM InProcess as ip ";
+	$qry.="LEFT OUTER JOIN InprocessDimns AS ipd ON ip.InProcess_ID=ipd.IP_ID AND ipd.Job_NO='$jobno' AND Batch_ID='$batchid' ";
+	$qry.="INNER JOIN Instrument AS inst ON inst.Instrument_ID=ip.Instrument_ID "; 
+	$qry.="WHERE ip.Operation_ID='$opid' AND Prod_Dimn!=0 AND ip.Deleted!=1 ORDER BY Baloon_NO ASC;";
+	
+}
 //print($qry);
 	$resa = mysql_query($qry, $cxn) or die(mysql_error($cxn));
 	$noofdimns=mysql_num_rows($resa);		

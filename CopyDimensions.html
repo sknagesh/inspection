@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+	<head>
+		<title>Copy Dimensions From One Part To Another Part</title>
+<link rel="stylesheet" href="validationEngine.jquery.css" type="text/css">
+ <style type="text/css">
+* { font-family: Verdana; font-size=10; }
+label {padding-right:1em;float: left; color: green}
+label.error { float: none; color: red; padding-left: .5em; vertical-align: top; }
+p { font-weight: bold; clear: both; }
+.submit { margin-left: 12em; }
+.drawingqty{border-spacing=2px;
+color: #ffffff;
+} 
+</style>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="jquery.validate.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+
+$('#operation').validate(); //attach form to validation engine
+$('#customers').load("get_customer.php?id=1"); //load customer list on to div customer
+$('#customerd').load("get_customer.php?id=2"); //load customer list on to div customer
+
+$('#customers').click(function() {     //populate drawing list based on customer
+var custid=$('#Customer_ID1').val();
+console.log(custid);
+	var url="get_drawing_list.php?custid="+custid+'&id=1';
+	$('#drawings').load(url);
+    });
+
+$('#customerd').click(function() {     //populate drawing list based on customer
+	var custid=$('#Customer_ID2').val();
+	console.log(custid);
+	var url="get_drawing_list.php?custid="+custid+'&id=2';
+	$('#drawingd').load(url);
+    });
+
+
+
+$("#drawings").click(function() {      //populate operation list based on drawing no
+var drawingid=$('#Drawing_ID1').val();
+console.log(drawingid);
+var url="get_operation_list.php?drawingid="+drawingid+'&id=1';
+$('#operations').load(url);
+});
+
+
+$("#drawingd").click(function() {      //populate operation list based on drawing no
+var drawingid=$('#Drawing_ID2').val();
+console.log(drawingid);
+var url="get_operation_list.php?drawingid="+drawingid+'&id=2';
+$('#operationd').load(url);
+});
+
+
+});
+	
+$("form#operation").live("submit",function(event) {
+	event.preventDefault();
+	var $this = $(this);
+	
+	$.ajax({data: $this.serializeArray(),
+   			dataType: "html",
+   			type: $this.attr("method"),
+   			url: $this.attr("action"),
+   			success: function(html) {
+								document.getElementById('footer').innerHTML=html;
+      								}
+			});
+
+	});
+
+
+	
+</script>
+</head>
+<body>
+<form name="operation" id="operation" method="post" action="copy_dimensions_to_new_operation.php" >
+<fieldset><legend>Source Part Details</legend>
+<table >		
+		<tr><td><div id="customers"> </div></td></tr>		
+		<tr><td><div id="drawings"> </div></td></tr>
+		<tr><td><div id="operations"> </div></td></tr>
+</table>
+</fieldset>
+
+<fieldset><legend>Destination Part Details</legend>
+<table >		
+		<tr><td><div id="customerd"> </div></td></tr>		
+		<tr><td><div id="drawingd"> </div></td></tr>
+		<tr><td><div id="operationd"> </div></td></tr>
+</table>
+<table>
+		<td colspan="4" align="center"><input type="submit" name="Submit" value=Submit />
+</table>
+</fieldset>
+
+		</form>
+
+<div id="footer"> </div> <!--place show errors, results etc-->
+
+</body>
+</html>
