@@ -44,7 +44,7 @@ var url="view_report_inprocess_dimns.php?opid="+opid+"&batchid="+batchid;
 
 $('#viewipdimn').submit(function(){
 if (!$('*[id^="jobno"]').is(':checked')){
-	alert("Please Select At LEast One job for Report");
+	alert("Please Select At Least One job for Report");
 	return false;
 }else if (!$('*[id^="bno"]').is(':checked')){
 	alert("Please Select At Least One Dimension for Report");
